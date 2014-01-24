@@ -14,6 +14,7 @@ import psutil
 
 class CpuGlow:
     pg = PyGlow()
+    arm = [6, 5, 4, 3, 2, 1]
 
     def run(self, auto, pattern):
         """
@@ -43,16 +44,15 @@ class CpuGlow:
 
         """
 
-        arm = [1, 2, 3, 4, 5, 6]
         cpu = psutil.cpu_percent()
         brightness = 70
         assert isinstance(cpu, float)
         speed = 300 + (2 * int(cpu))
-        level = 100 / len(arm)
+        level = 100 / len(self.arm)
 
-        for i in range(len(arm)):
+        for i in range(len(self.arm)):
             if cpu >= level * i:
-                self.pg.pulse(arm[i], brightness, speed)
+                self.pg.pulse(self.arm[i], brightness, speed)
 
     def equalizer(self):
         """
@@ -61,16 +61,16 @@ class CpuGlow:
 
         @rtype :nil
         """
-        arm = [6, 5, 4, 3, 2, 1]
-        level = 100 / len(arm)
+        self.arm = [6, 5, 4, 3, 2, 1]
+        level = 100 / len(self.arm)
         cpu = psutil.cpu_percent()
         brightness = 70
 
-        for i in range(len(arm)):
+        for i in range(len(self.arm)):
             if cpu >= level * i:
-                self.pg.led(arm[i], brightness)
+                self.pg.led(self.arm[i], brightness)
             else:
-                self.pg.led(arm[i], 0)
+                self.pg.led(self.arm[i], 0)
 
 
 if __name__ == "__main__":
