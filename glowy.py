@@ -12,7 +12,7 @@ def main():
     try:
         while True:
             cg = CpuGlow()
-            cg.equalizer()
+            cg.snake()
             mg = MemGlow()
             mg.one_pulse()
             sleep(0.2)
