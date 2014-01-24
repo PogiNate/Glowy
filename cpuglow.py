@@ -36,22 +36,23 @@ class CpuGlow:
 
     def snake(self):
         """
+        Makes the lights along the arm blink faster, and they only
+        blink up to the level of the cpu usage.
 
-          Makes the lights along the CPU arm light up sequentially. The amount of time between
-          runs is reduced as the cpu utilization increases.
+        This one might need refactored again.
 
-         """
+        """
 
         arm = [1, 2, 3, 4, 5, 6]
         cpu = psutil.cpu_percent()
         brightness = 70
-        speed = 300
+        assert isinstance(cpu, float)
+        speed = 300 + (2 * int(cpu))
         level = 100 / len(arm)
 
         for i in range(len(arm)):
             if cpu >= level * i:
                 self.pg.pulse(arm[i], brightness, speed)
-
 
     def equalizer(self):
         """

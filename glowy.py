@@ -6,7 +6,7 @@ __author__ = 'Nate Dickson'
 #import sys
 from cpuglow import CpuGlow
 from memglow import MemGlow
-
+from time import sleep
 
 def main():
     try:
@@ -15,6 +15,7 @@ def main():
             cg.equalizer()
             mg = MemGlow()
             mg.one_pulse()
+            sleep(0.2)
     except KeyboardInterrupt:
         CpuGlow.pg.all(0)
 
