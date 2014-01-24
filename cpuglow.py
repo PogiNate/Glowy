@@ -68,9 +68,9 @@ class CpuGlow:
 
         for i in range(len(arm)):
             if cpu >= level * i:
-                self.pg.led([i], brightness)
+                self.pg.led(arm[i], brightness)
             else:
-                self.pg.led([i], 0)
+                self.pg.led(arm[i], 0)
 
 
 if __name__ == "__main__":
