@@ -23,7 +23,7 @@ def pulse():
 
     """
 
-    arm = [7, 8, 9, 10, 11, 12]
+    arm = [12, 11, 10, 9, 8, 7]
 
     try:
         while True:
@@ -31,6 +31,7 @@ def pulse():
             brightness = 70
             speed = 300
             level = 100/len(arm)
+            #print "Brightness: %d, speed: %d, level %f" %(brightness, speed, level)
             for i in range(len(arm)):
                 if used >= level * i:
                     pg.pulse(arm[i], brightness, speed)
