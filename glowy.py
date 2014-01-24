@@ -19,7 +19,7 @@ def main():
             sg.equalizer()
             mg.one_pulse()
             cg.snake()
-            sleep(0.2)
+            #sleep(0.2)
     except KeyboardInterrupt:
         CpuGlow.pg.all(0)
 

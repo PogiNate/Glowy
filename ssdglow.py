@@ -46,13 +46,13 @@ class SSDGlow():
         #print "Used: %f, level: %f" %(used, level)
         for i in range(len(self.arm)):
             if used >= level * i:
-                self.pg.led(self.arm[i], self.brightness)
+                #self.pg.led(self.arm[i], self.brightness)
                 if i > self.peak:
                     self.peak = i
-            else:
-              self.pg.led(self.arm[i],0)
+            #else:
+              #self.pg.led(self.arm[i],0)
             
-        self.pg.pulse(self.arm[self.peak], self.brightness + 100, speed)
+        self.pg.pulse(self.arm[self.peak], self.brightness + 10, speed)
 
 
     def snake(self):
