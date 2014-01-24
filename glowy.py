@@ -6,11 +6,11 @@ __author__ = 'Nate Dickson'
 #import sys
 #import getopt
 import cpuglow
-
+import memglow
 
 def main():
     cpuglow.equalizer()
-
+    memglow.pulse()
 
 if __name__ == '__main__':
     main()
