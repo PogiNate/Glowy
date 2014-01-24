@@ -40,16 +40,19 @@ class SSDGlow():
         Fancy Equalizer effect. Probably.
 
         """
-        used = psutil.disk_usage("/")
+        used = psutil.disk_usage("/")[3]
         speed = 100
         level = 100 / len(self.arm)
-
+        #print "Used: %f, level: %f" %(used, level)
         for i in range(len(self.arm)):
             if used >= level * i:
                 self.pg.led(self.arm[i], self.brightness)
-                if i > peak:
-                    peak = i
-        self.pg.pulse(self.arm[peak], self.brightness + 100, speed)
+                if i > self.peak:
+                    self.peak = i
+            else:
+              self.pg.led(self.arm[i],0)
+            
+        self.pg.pulse(self.arm[self.peak], self.brightness + 100, speed)
 
 
     def snake(self):
@@ -68,4 +71,4 @@ class SSDGlow():
 
 if __name__ == "__main__":
     sg = SSDGlow()
-    sg.run(True, "snake")
+    sg.run(True, "eq")
