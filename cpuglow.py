@@ -11,68 +11,67 @@ from time import sleep
 from pyglow import PyGlow
 import psutil
 
-pg = PyGlow()
 
-trail = [128, 64, 32]
+class CpuGlow:
+    pg = PyGlow()
+
+    def run(self, auto, pattern):
+        """
+        Lets you run one of the light patterns defined in this class.
+        You can run them once, or forever. It's really up to you.
+        @param auto: boolean Run forever or only once.
+        @param pattern: one of the patterns in this class
+        @return: nothing
+        """
+        if auto:
+            try:
+                while auto:
+                    if pattern == "snake":
+                        self.snake()
+                    elif pattern == "equalizer":
+                        self.equalizer()
+                        sleep(0.2)
+            except KeyboardInterrupt:
+                self.pg.all(0)
+
+    def snake(self):
+        """
+
+          Makes the lights along the CPU arm light up sequentially. The amount of time between
+          runs is reduced as the cpu utilization increases.
+
+         """
+
+        arm = [1, 2, 3, 4, 5, 6]
+        cpu = psutil.cpu_percent()
+        brightness = 70
+        speed = 300
+        level = 100 / len(arm)
+
+        for i in range(len(arm)):
+            if cpu >= level * i:
+                self.pg.pulse(arm[i], brightness, speed)
 
 
-def snake(auto):
-    """
+    def equalizer(self):
+        """
 
-      Makes the lights along the CPU arm light up sequentially. The amount of time between
-      runs is reduced as the cpu utilization increases.
+          Lights from the center outward, illuminating more lights as the CPU usage increases.
 
-     """
+        @rtype :nil
+        """
+        arm = [6, 5, 4, 3, 2, 1]
+        level = 100 / len(arm)
+        cpu = psutil.cpu_percent()
+        brightness = 70
 
-    arm = [1, 2, 3, 4, 5, 6]
-    try:
-        while auto:
-            cpu = psutil.cpu_percent()
-            delay = 1 - cpu * 0.01
-            for i in range(len(arm) + 3):
-                head = i
-                mid = i - 1
-                tail = i - 2
-
-                for i in range(len(arm)):
-                    if i == head:
-                        pg.led(arm[i], trail[0])
-                    elif i == mid:
-                        pg.led(arm[i], trail[1])
-                    elif i == tail:
-                        pg.led(arm[i], trail[2])
-                    else:
-                        pg.led(arm[i], 0)
-                    sleep(0.01)
-            sleep(delay)
-    except KeyboardInterrupt:
-        pg.all(0)
-
-
-def equalizer(auto):
-    """
-
-      Lights from the center outward, illuminating more lights as the CPU usage increases.
-
-    """
-    leds = [6, 5, 4, 3, 2, 1]
-    try:
-        while True:
-            level = 100 / len(leds)
-            cpu = psutil.cpu_percent()
-            brightness = 70
-
-            for i in range(len(leds)):
-                if (cpu >= level * i):
-                    pg.led(leds[i], brightness)
-                else:
-                    pg.led(leds[i], 0)
-            sleep(0.2)
-
-    except KeyboardInterrupt:
-        pg.all(0)
+        for i in range(len(arm)):
+            if cpu >= level * i:
+                self.pg.led([i], brightness)
+            else:
+                self.pg.led([i], 0)
 
 
 if __name__ == "__main__":
-    #equalizer(auto=True)
-    snake(auto=True)
+    cg = CpuGlow()
+    cg.run(True, "snake")

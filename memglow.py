@@ -15,7 +15,7 @@ import psutil
 class MemGlow:
     pg = PyGlow()
 
-    def _one_pulse(self):
+    def one_pulse(self):
         """
 
         This will pulse the lights from the center to the edge
@@ -46,12 +46,12 @@ class MemGlow:
         if auto:
             try:
                 while auto:
-                    self._one_pulse()
+                    self.one_pulse()
                     sleep(0.2)
             except KeyboardInterrupt:
                 self.pg.all(0)
         else:
-            self._one_pulse()
+            self.one_pulse()
 
 
 if __name__ == "__main__":
