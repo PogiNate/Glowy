@@ -7,7 +7,6 @@ Raspberry Pi with the PiGlow accessory board correctly installed and configured.
 
 """
 
-import os, sys
 from time import sleep
 from pyglow import PyGlow
 import psutil
@@ -17,7 +16,7 @@ pg = PyGlow()
 trail = [128, 64, 32]
 
 
-def snake():
+def snake(auto):
     """
 
       Makes the lights along the CPU arm light up sequentially. The amount of time between
@@ -25,32 +24,32 @@ def snake():
 
      """
 
-    leds = [1, 2, 3, 4, 5, 6]
+    arm = [1, 2, 3, 4, 5, 6]
     try:
-        while True:
+        while auto:
             cpu = psutil.cpu_percent()
             delay = 1 - cpu * 0.01
-            for i in range(len(leds) + 3):
+            for i in range(len(arm) + 3):
                 head = i
                 mid = i - 1
                 tail = i - 2
 
-                for i in range(len(leds)):
+                for i in range(len(arm)):
                     if i == head:
-                        pg.led(leds[i], trail[0])
+                        pg.led(arm[i], trail[0])
                     elif i == mid:
-                        pg.led(leds[i], trail[1])
+                        pg.led(arm[i], trail[1])
                     elif i == tail:
-                        pg.led(leds[i], trail[2])
+                        pg.led(arm[i], trail[2])
                     else:
-                        pg.led(leds[i], 0)
+                        pg.led(arm[i], 0)
                     sleep(0.01)
             sleep(delay)
     except KeyboardInterrupt:
         pg.all(0)
 
 
-def equalizer():
+def equalizer(auto):
     """
 
       Lights from the center outward, illuminating more lights as the CPU usage increases.
@@ -75,5 +74,5 @@ def equalizer():
 
 
 if __name__ == "__main__":
-    #equalizer()
-    snake()
+    #equalizer(auto=True)
+    snake(auto=True)
