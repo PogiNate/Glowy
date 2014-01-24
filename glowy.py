@@ -6,15 +6,19 @@ __author__ = 'Nate Dickson'
 #import sys
 from cpuglow import CpuGlow
 from memglow import MemGlow
+from ssdglow import SSDGlow
 from time import sleep
+
 
 def main():
     try:
+        cg = CpuGlow()
+        mg = MemGlow()
+        sg = SSDGlow()
         while True:
-            cg = CpuGlow()
-            cg.snake()
-            mg = MemGlow()
+            sg.equalizer()
             mg.one_pulse()
+            cg.snake()
             sleep(0.2)
     except KeyboardInterrupt:
         CpuGlow.pg.all(0)
